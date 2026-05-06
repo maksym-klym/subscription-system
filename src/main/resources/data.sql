@@ -1,15 +1,15 @@
 -- USERS --
 INSERT INTO users(created_at, email, first_name, last_name, "password") VALUES
-(NOW(), 'u1@mail.com', 'User1', 'Test', 'pass'),
-(NOW(), 'u2@mail.com', 'User2', 'Test', 'pass'),
-(NOW(), 'u3@mail.com', 'User3', 'Test', 'pass'),
-(NOW(), 'u4@mail.com', 'User4', 'Test', 'pass'),
-(NOW(), 'u5@mail.com', 'User5', 'Test', 'pass'),
-(NOW(), 'u6@mail.com', 'User6', 'Test', 'pass'),
-(NOW(), 'u7@mail.com', 'User7', 'Test', 'pass'),
-(NOW(), 'u8@mail.com', 'User8', 'Test', 'pass'),
-(NOW(), 'u9@mail.com', 'User9', 'Test', 'pass'),
-(NOW(), 'u10@mail.com', 'User10', 'Test', 'pass');
+(NOW(), 'user1@mail.com', 'Jeth', 'Ellison', 'password'),
+(NOW(), 'user2@mail.com', 'Eugine', 'Bryde', 'password'),
+(NOW(), 'user3@mail.com', 'Foster', 'Ryan', 'password'),
+(NOW(), 'user4@mail.com', 'Mike', 'Vincent', 'password'),
+(NOW(), 'user5@mail.com', 'Arin', 'Pinnington', 'password'),
+(NOW(), 'user6@mail.com', 'Andrew', 'Colorod', 'password'),
+(NOW(), 'user7@mail.com', 'John', 'Doe', 'password'),
+(NOW(), 'user8@mail.com', 'Jane', 'Kowalski', 'password'),
+(NOW(), 'user9@mail.com', 'George', 'Smith', 'password'),
+(NOW(), 'user10@mail.com', 'Bob', 'Vance', 'password');
 
 -- PLANS --
 INSERT INTO subscription_plans(duration_days, "name", price) VALUES
