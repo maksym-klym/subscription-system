@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     @Column(unique = true, nullable = false)
     private String email;
