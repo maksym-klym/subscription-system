@@ -1,0 +1,16 @@
+services:
+  postgres:
+    container_name: subscription-system-postgres
+    image: postgres:15
+    volumes:
+      - subscription-system-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: subscription_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+volumes:
+  subscription-system-data:
