@@ -3,7 +3,7 @@ package com.maks.subscriptionsystem.service;
 import com.maks.subscriptionsystem.dto.CreateUserDto;
 import com.maks.subscriptionsystem.dto.UserDto;
 import com.maks.subscriptionsystem.entity.User;
-import com.maks.subscriptionsystem.exception.UserNotFoundException;
+import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.UserMapper;
 import com.maks.subscriptionsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
         return UserMapper.toDto(user);
     }
 
     public UserDto getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("User not found with email: " + email));
         return UserMapper.toDto(user);
     }
 
