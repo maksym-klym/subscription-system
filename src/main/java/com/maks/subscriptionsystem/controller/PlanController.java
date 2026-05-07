@@ -20,5 +20,5 @@ public class PlanController {
     public List<PlanDto> getAll() { return planService.getAll(); }
 
     @GetMapping("/{id}")
-    public PlanDto getPlanById(@PathVariable Long id) { return planService.getPlanById(id); }
+    public PlanDto get(@PathVariable Long id) { return planService.getPlanById(id); }
 }
