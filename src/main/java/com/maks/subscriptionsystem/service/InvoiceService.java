@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
-    private final SubscriptionRepository subscriptionRepository;
 
     public InvoiceDto get(Long invoiceId) {
         Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
