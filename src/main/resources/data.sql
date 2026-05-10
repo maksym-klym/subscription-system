@@ -11,7 +11,7 @@ INSERT INTO users(created_at, email, first_name, last_name, "password") VALUES
 (NOW(), 'user9@mail.com', 'George', 'Smith', 'password'),
 (NOW(), 'user10@mail.com', 'Bob', 'Vance', 'password');
 
--- PLANS --
+-- SUBSCRIPTION_PLANS --
 INSERT INTO subscription_plans(duration_days, "name", price) VALUES
 (30, 'BASIC', 9.99),
 (30, 'PRO', 19.99),

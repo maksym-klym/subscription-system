@@ -17,7 +17,8 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
 
     public InvoiceDto get(Long invoiceId) {
-        Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
         return InvoiceMapper.toDto(invoice);
     }
 

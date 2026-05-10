@@ -23,7 +23,11 @@ public class PlanController {
 
     @Operation(summary = "Get all plans")
     @GetMapping
-    public Page<PlanDto> getAll(@RequestParam(required = false) @Parameter(description = "Plan name") Plan.PlanName planName, @ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return planService.getAll(planName, pageable); }
+    public Page<PlanDto> getAll(
+            @RequestParam(required = false) @Parameter(description = "Plan name") Plan.PlanName planName,
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject  Pageable pageable) {
+        return planService.getAll(planName, pageable);
+    }
 
     @Operation(summary = "Get plan by ID")
     @GetMapping("/{id}")

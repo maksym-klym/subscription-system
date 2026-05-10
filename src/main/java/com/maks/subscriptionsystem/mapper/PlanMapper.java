@@ -4,7 +4,7 @@ import com.maks.subscriptionsystem.dto.PlanDto;
 import com.maks.subscriptionsystem.entity.Plan;
 
 public class PlanMapper {
-    public static PlanDto toDto(Plan plan){
+    public static PlanDto toDto(Plan plan) {
         PlanDto planDto = new PlanDto();
         planDto.setId(plan.getId());
         planDto.setDurationDays(plan.getDurationDays());

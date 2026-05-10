@@ -40,12 +40,14 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
         return UserMapper.toDto(user);
     }
 
     public UserDto getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("User not found with email: " + email));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ItemNotFoundException("User not found with email: " + email));
         return UserMapper.toDto(user);
     }
 

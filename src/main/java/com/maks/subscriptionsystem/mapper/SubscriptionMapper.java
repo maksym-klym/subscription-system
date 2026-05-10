@@ -4,7 +4,7 @@ import com.maks.subscriptionsystem.dto.SubscriptionDto;
 import com.maks.subscriptionsystem.entity.Subscription;
 
 public class SubscriptionMapper {
-    public static SubscriptionDto toDto(Subscription subscription){
+    public static SubscriptionDto toDto(Subscription subscription) {
         SubscriptionDto subscriptionDto = new SubscriptionDto();
         subscriptionDto.setId(subscription.getId());
         subscriptionDto.setStatus(subscription.getStatus());

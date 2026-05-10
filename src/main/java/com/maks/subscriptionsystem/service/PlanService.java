@@ -20,7 +20,8 @@ public class PlanService {
     }
 
     public PlanDto getPlanById(Long id) {
-        Plan plan = planRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + id));
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + id));
         return PlanMapper.toDto(plan);
     }
 }

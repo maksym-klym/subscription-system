@@ -4,7 +4,7 @@ import com.maks.subscriptionsystem.dto.InvoiceDto;
 import com.maks.subscriptionsystem.entity.Invoice;
 
 public class InvoiceMapper {
-    public static InvoiceDto toDto(Invoice invoice){
+    public static InvoiceDto toDto(Invoice invoice) {
         InvoiceDto invoiceDto = new InvoiceDto();
         invoiceDto.setId(invoice.getId());
         invoiceDto.setSubscriptionId(invoice.getSubscription().getId());

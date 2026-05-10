@@ -29,7 +29,11 @@ public class UserController {
 
     @Operation(summary = "Get all users")
     @GetMapping
-    public Page<UserDto> getAll(@ParameterObject UserFilter userFilter, @ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return userService.getAll(userFilter, pageable); }
+    public Page<UserDto> getAll(
+            @ParameterObject UserFilter userFilter,
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
+        return userService.getAll(userFilter, pageable);
+    }
 
     @Operation(summary = "Create user")
     @PostMapping

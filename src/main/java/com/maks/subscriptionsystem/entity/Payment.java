@@ -1,6 +1,5 @@
 package com.maks.subscriptionsystem.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 

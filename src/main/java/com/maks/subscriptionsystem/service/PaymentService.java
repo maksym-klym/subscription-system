@@ -20,9 +20,12 @@ public class PaymentService {
 
     @Transactional
     public void payInvoice(Long invoiceId) {
-        Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
+
         if(invoice.getStatus() == Invoice.InvoiceStatus.PAID)
             throw new IllegalStateException("Invoice is already paid");
+
         Payment payment = new Payment();
         payment.setInvoice(invoice);
         payment.setAmount(invoice.getAmount());

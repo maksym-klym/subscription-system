@@ -22,7 +22,10 @@ public class InvoiceController {
 
     @Operation(summary = "Get all invoices")
     @GetMapping
-    public Page<InvoiceDto> getAll(@ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return invoiceService.getAll(pageable); }
+    public Page<InvoiceDto> getAll(
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
+        return invoiceService.getAll(pageable);
+    }
 
     @Operation(summary = "Get invoice by ID")
     @GetMapping("/{id}")
