@@ -1,5 +1,6 @@
 package com.maks.subscriptionsystem.service;
 
+import com.maks.subscriptionsystem.dto.filter.SubscriptionFilter;
 import com.maks.subscriptionsystem.entity.Plan;
 import com.maks.subscriptionsystem.dto.SubscriptionDto;
 import com.maks.subscriptionsystem.entity.User;
@@ -31,7 +32,13 @@ public class SubscriptionService {
         return SubscriptionMapper.toDto(subscription);
     }
 
-    public Page<SubscriptionDto> getAll(Pageable pageable) { return subscriptionRepository.findAll(pageable).map(SubscriptionMapper::toDto); }
+    public Page<SubscriptionDto> getAll(SubscriptionFilter subscriptionFilter, Pageable pageable) {
+        return subscriptionRepository.findAllBy(
+                subscriptionFilter.getUserId(),
+                subscriptionFilter.getStatus(),
+                pageable
+        ).map(SubscriptionMapper::toDto);
+    }
 
     @Transactional
     public SubscriptionDto createSubscription(Long userId, Long planId) {

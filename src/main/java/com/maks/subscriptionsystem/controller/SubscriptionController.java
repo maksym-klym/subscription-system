@@ -2,6 +2,7 @@ package com.maks.subscriptionsystem.controller;
 
 import com.maks.subscriptionsystem.dto.InvoiceDto;
 import com.maks.subscriptionsystem.dto.SubscriptionDto;
+import com.maks.subscriptionsystem.dto.filter.SubscriptionFilter;
 import com.maks.subscriptionsystem.service.InvoiceService;
 import com.maks.subscriptionsystem.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +29,9 @@ public class SubscriptionController {
     @Operation(summary = "Get all subscriptions")
     @GetMapping
     public Page<SubscriptionDto> getAll(
+            @ParameterObject SubscriptionFilter subscriptionFilter,
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
-        return subscriptionService.getAll(pageable);
+        return subscriptionService.getAll(subscriptionFilter, pageable);
     }
 
     @Operation(summary = "Get all invoices by subscription ID")
