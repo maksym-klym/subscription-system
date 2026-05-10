@@ -24,9 +24,9 @@ public class PlanController {
     @Operation(summary = "Get all plans")
     @GetMapping
     public Page<PlanDto> getAll(
-            @RequestParam(required = false) @Parameter(description = "Plan name") Plan.PlanName planName,
+            @RequestParam(required = false) @Parameter(description = "Plan name") Plan.PlanName name,
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject  Pageable pageable) {
-        return planService.getAll(planName, pageable);
+        return planService.getAll(name, pageable);
     }
 
     @Operation(summary = "Get plan by ID")

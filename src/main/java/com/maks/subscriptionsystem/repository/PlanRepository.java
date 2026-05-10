@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface PlanRepository extends JpaRepository<Plan, Long> {
     @Query("""
         SELECT p FROM Plan p
-        WHERE (:planName IS NULL OR p.name = :planName)
+        WHERE (:name IS NULL OR p.name = :name)
     """)
-    Page<Plan> findAllBy(@Param("planName") Plan.PlanName planName, Pageable pageable);
+    Page<Plan> findAllBy(@Param("name") Plan.PlanName name, Pageable pageable);
 }

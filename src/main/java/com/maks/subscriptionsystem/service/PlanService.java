@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 public class PlanService {
     private final PlanRepository planRepository;
 
-    public Page<PlanDto> getAll(Plan.PlanName planName, Pageable pageable) {
-        return planRepository.findAllBy(planName, pageable).map(PlanMapper::toDto);
+    public Page<PlanDto> getAll(Plan.PlanName name, Pageable pageable) {
+        return planRepository.findAllBy(name, pageable).map(PlanMapper::toDto);
     }
 
     public PlanDto getPlanById(Long id) {

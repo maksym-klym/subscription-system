@@ -1,6 +1,8 @@
 package com.maks.subscriptionsystem.controller;
 
 import com.maks.subscriptionsystem.dto.InvoiceDto;
+import com.maks.subscriptionsystem.entity.Invoice;
+import com.maks.subscriptionsystem.entity.Plan;
 import com.maks.subscriptionsystem.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,8 +25,9 @@ public class InvoiceController {
     @Operation(summary = "Get all invoices")
     @GetMapping
     public Page<InvoiceDto> getAll(
+            @RequestParam(required = false) @Parameter(description = "Invoice status") Invoice.InvoiceStatus status,
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
-        return invoiceService.getAll(pageable);
+        return invoiceService.getAll(status, pageable);
     }
 
     @Operation(summary = "Get invoice by ID")
