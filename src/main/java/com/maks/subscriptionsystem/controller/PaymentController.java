@@ -19,5 +19,7 @@ public class PaymentController {
 
     @Operation(summary = "Pay invoice by ID")
     @PostMapping("/{invoiceId}")
-    public void payInvoiceById(@Parameter(description = "Invoice ID") @PathVariable Long invoiceId) { paymentService.payInvoice(invoiceId); }
+    public void payInvoiceById(@Parameter(description = "Invoice ID") @PathVariable Long invoiceId) {
+        paymentService.payInvoice(invoiceId);
+    }
 }

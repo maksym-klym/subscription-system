@@ -2,6 +2,7 @@ package com.maks.subscriptionsystem.controller;
 
 import com.maks.subscriptionsystem.dto.CreateUserDto;
 import com.maks.subscriptionsystem.dto.UserDto;
+import com.maks.subscriptionsystem.dto.filter.UserFilter;
 import com.maks.subscriptionsystem.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,7 +29,11 @@ public class UserController {
 
     @Operation(summary = "Get all users")
     @GetMapping
-    public Page<UserDto> getAll(@ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return userService.getAll(pageable); }
+    public Page<UserDto> getAll(
+            @ParameterObject UserFilter userFilter,
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
+        return userService.getAll(userFilter, pageable);
+    }
 
     @Operation(summary = "Create user")
     @PostMapping

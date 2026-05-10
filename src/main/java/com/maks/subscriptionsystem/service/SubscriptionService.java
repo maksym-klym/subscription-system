@@ -1,5 +1,6 @@
 package com.maks.subscriptionsystem.service;
 
+import com.maks.subscriptionsystem.dto.filter.SubscriptionFilter;
 import com.maks.subscriptionsystem.entity.Plan;
 import com.maks.subscriptionsystem.dto.SubscriptionDto;
 import com.maks.subscriptionsystem.entity.User;
@@ -26,16 +27,25 @@ public class SubscriptionService {
     private final InvoiceService invoiceService;
 
     public SubscriptionDto get(Long subscriptionId) {
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));
         return SubscriptionMapper.toDto(subscription);
     }
 
-    public Page<SubscriptionDto> getAll(Pageable pageable) { return subscriptionRepository.findAll(pageable).map(SubscriptionMapper::toDto); }
+    public Page<SubscriptionDto> getAll(SubscriptionFilter subscriptionFilter, Pageable pageable) {
+        return subscriptionRepository.findAllBy(
+                subscriptionFilter.getUserId(),
+                subscriptionFilter.getStatus(),
+                pageable
+        ).map(SubscriptionMapper::toDto);
+    }
 
     @Transactional
     public SubscriptionDto createSubscription(Long userId, Long planId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new ItemNotFoundException("User not found with id: " + userId));
-        Plan plan = planRepository.findById(planId).orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + planId));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ItemNotFoundException("User not found with id: " + userId));
+        Plan plan = planRepository.findById(planId)
+                .orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + planId));
         Subscription subscription = new Subscription();
         LocalDateTime creationTime = LocalDateTime.now();
         subscription.setUser(user);
@@ -49,7 +59,8 @@ public class SubscriptionService {
     }
 
     public SubscriptionDto cancelSubscription(Long subscriptionId) {
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));;
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));;
         subscription.setStatus(Subscription.SubscriptionStatus.CANCELED);
         subscriptionRepository.save(subscription);
         return SubscriptionMapper.toDto(subscription);

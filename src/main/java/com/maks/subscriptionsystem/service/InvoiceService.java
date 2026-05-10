@@ -17,11 +17,14 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
 
     public InvoiceDto get(Long invoiceId) {
-        Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
         return InvoiceMapper.toDto(invoice);
     }
 
-    public Page<InvoiceDto> getAll(Pageable pageable) { return invoiceRepository.findAll(pageable).map(InvoiceMapper::toDto); }
+    public Page<InvoiceDto> getAll(Invoice.InvoiceStatus status, Pageable pageable) {
+        return invoiceRepository.findAllBy(status, pageable).map(InvoiceMapper::toDto);
+    }
 
     public Page<InvoiceDto> getAllBySubscriptionId(Long subscriptionId, Pageable pageable) {
         return invoiceRepository.findAllBySubscriptionId(subscriptionId, pageable).map(InvoiceMapper::toDto);

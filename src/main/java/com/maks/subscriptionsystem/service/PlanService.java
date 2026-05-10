@@ -15,10 +15,13 @@ import org.springframework.stereotype.Service;
 public class PlanService {
     private final PlanRepository planRepository;
 
-    public Page<PlanDto> getAll(Pageable pageable) { return planRepository.findAll(pageable).map(PlanMapper::toDto); }
+    public Page<PlanDto> getAll(Plan.PlanName name, Pageable pageable) {
+        return planRepository.findAllBy(name, pageable).map(PlanMapper::toDto);
+    }
 
     public PlanDto getPlanById(Long id) {
-        Plan plan = planRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + id));
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Plan not found with id: " + id));
         return PlanMapper.toDto(plan);
     }
 }

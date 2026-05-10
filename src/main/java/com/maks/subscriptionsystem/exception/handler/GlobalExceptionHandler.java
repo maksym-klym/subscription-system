@@ -11,5 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(ItemNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorDto handleNotFoundException(ItemNotFoundException exception) { return ErrorDto.of(HttpStatus.NOT_FOUND, exception); }
+    public ErrorDto handleNotFoundException(ItemNotFoundException exception) {
+        return ErrorDto.of(HttpStatus.NOT_FOUND, exception);
+    }
 }
