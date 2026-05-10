@@ -2,6 +2,7 @@ package com.maks.subscriptionsystem.service;
 
 import com.maks.subscriptionsystem.dto.CreateUserDto;
 import com.maks.subscriptionsystem.dto.UserDto;
+import com.maks.subscriptionsystem.dto.filter.UserFilter;
 import com.maks.subscriptionsystem.entity.User;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.UserMapper;
@@ -29,7 +30,14 @@ public class UserService {
         return UserMapper.toDto(savedUser);
     }
 
-    public Page<UserDto> getAll(Pageable pageable) { return userRepository.findAll(pageable).map(UserMapper::toDto); }
+    public Page<UserDto> getAll(UserFilter userFilter, Pageable pageable) {
+        return userRepository.findAllBy(
+                userFilter.getEmail(),
+                userFilter.getFirstName(),
+                userFilter.getLastName(),
+                pageable
+        ).map(UserMapper::toDto);
+    }
 
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
