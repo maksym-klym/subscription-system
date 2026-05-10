@@ -6,9 +6,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "Invoices", description = "Invoice management APIs")
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class InvoiceController {
 
     @Operation(summary = "Get all invoices")
     @GetMapping
-    public List<InvoiceDto> getAll() { return invoiceService.getAll(); }
+    public Page<InvoiceDto> getAll(@ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return invoiceService.getAll(pageable); }
 
     @Operation(summary = "Get invoice by ID")
     @GetMapping("/{id}")
