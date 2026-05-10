@@ -11,10 +11,11 @@ import com.maks.subscriptionsystem.repository.SubscriptionRepository;
 import com.maks.subscriptionsystem.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +30,7 @@ public class SubscriptionService {
         return SubscriptionMapper.toDto(subscription);
     }
 
-    public List<SubscriptionDto> getAll() { return subscriptionRepository.findAll().stream().map(SubscriptionMapper::toDto).toList(); }
+    public Page<SubscriptionDto> getAll(Pageable pageable) { return subscriptionRepository.findAll(pageable).map(SubscriptionMapper::toDto); }
 
     @Transactional
     public SubscriptionDto createSubscription(Long userId, Long planId) {

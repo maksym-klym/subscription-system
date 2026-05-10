@@ -8,6 +8,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +27,11 @@ public class SubscriptionController {
 
     @Operation(summary = "Get all subscriptions")
     @GetMapping
-    public List<SubscriptionDto> getAll() { return subscriptionService.getAll(); }
+    public Page<SubscriptionDto> getAll(@ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return subscriptionService.getAll(pageable); }
 
     @Operation(summary = "Get all invoices by subscription ID")
     @GetMapping("/{id}/invoices")
-    public List<InvoiceDto> getAllInvoicesById(@Parameter(description = "Subscription ID") @PathVariable Long id) { return invoiceService.getAllBySubscriptionId(id); }
+    public Page<InvoiceDto> getAllInvoicesById(@Parameter(description = "Subscription ID") @PathVariable Long id, @ParameterObject @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) { return invoiceService.getAllBySubscriptionId(id, pageable); }
 
     @Operation(summary = "Get subscription by ID")
     @GetMapping("/{id}")

@@ -7,6 +7,8 @@ import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.UserMapper;
 import com.maks.subscriptionsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,6 +28,8 @@ public class UserService {
         User savedUser = userRepository.save(user);
         return UserMapper.toDto(savedUser);
     }
+
+    public Page<UserDto> getAll(Pageable pageable) { return userRepository.findAll(pageable).map(UserMapper::toDto); }
 
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));

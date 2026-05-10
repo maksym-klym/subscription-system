@@ -6,11 +6,10 @@ import com.maks.subscriptionsystem.entity.Subscription;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.InvoiceMapper;
 import com.maks.subscriptionsystem.repository.InvoiceRepository;
-import com.maks.subscriptionsystem.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -22,10 +21,10 @@ public class InvoiceService {
         return InvoiceMapper.toDto(invoice);
     }
 
-    public List<InvoiceDto> getAll() { return invoiceRepository.findAll().stream().map(InvoiceMapper::toDto).toList(); }
+    public Page<InvoiceDto> getAll(Pageable pageable) { return invoiceRepository.findAll(pageable).map(InvoiceMapper::toDto); }
 
-    public List<InvoiceDto> getAllBySubscriptionId(Long subscriptionId) {
-        return invoiceRepository.findAllBySubscriptionId(subscriptionId).stream().map(InvoiceMapper::toDto).toList();
+    public Page<InvoiceDto> getAllBySubscriptionId(Long subscriptionId, Pageable pageable) {
+        return invoiceRepository.findAllBySubscriptionId(subscriptionId, pageable).map(InvoiceMapper::toDto);
     }
 
     public void generateInvoice(Subscription subscription) {
