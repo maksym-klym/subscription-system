@@ -1,6 +1,7 @@
 package com.maks.subscriptionsystem.exception.handler;
 
 import com.maks.subscriptionsystem.dto.ErrorDto;
+import com.maks.subscriptionsystem.exception.InvoiceAlreadyPaidException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,5 +14,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorDto handleNotFoundException(ItemNotFoundException exception) {
         return ErrorDto.of(HttpStatus.NOT_FOUND, exception);
+    }
+
+    @ExceptionHandler(InvoiceAlreadyPaidException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto handleInvoiceAlreadyPaidException(InvoiceAlreadyPaidException exception) {
+        return ErrorDto.of(HttpStatus.CONFLICT, exception);
     }
 }

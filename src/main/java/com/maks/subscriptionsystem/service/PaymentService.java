@@ -3,6 +3,7 @@ package com.maks.subscriptionsystem.service;
 import com.maks.subscriptionsystem.entity.Invoice;
 import com.maks.subscriptionsystem.entity.Payment;
 import com.maks.subscriptionsystem.entity.Subscription;
+import com.maks.subscriptionsystem.exception.InvoiceAlreadyPaidException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.repository.InvoiceRepository;
 import com.maks.subscriptionsystem.repository.PaymentRepository;
@@ -24,7 +25,7 @@ public class PaymentService {
                 .orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
 
         if(invoice.getStatus() == Invoice.InvoiceStatus.PAID)
-            throw new IllegalStateException("Invoice is already paid");
+            throw new InvoiceAlreadyPaidException(invoiceId);
 
         Payment payment = new Payment();
         payment.setInvoice(invoice);
