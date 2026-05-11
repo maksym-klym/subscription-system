@@ -2,7 +2,6 @@ package com.maks.subscriptionsystem.controller;
 
 import com.maks.subscriptionsystem.dto.InvoiceDto;
 import com.maks.subscriptionsystem.entity.Invoice;
-import com.maks.subscriptionsystem.entity.Plan;
 import com.maks.subscriptionsystem.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,4 +32,10 @@ public class InvoiceController {
     @Operation(summary = "Get invoice by ID")
     @GetMapping("/{id}")
     public InvoiceDto get(@Parameter(description = "Invoice ID") @PathVariable Long id){ return invoiceService.get(id); }
+
+    @Operation(summary = "Pay invoice by ID")
+    @PostMapping("/{invoiceId}/pay")
+    public void payInvoiceById(@Parameter(description = "Invoice ID") @PathVariable Long invoiceId) {
+        invoiceService.payInvoice(invoiceId);
+    }
 }
