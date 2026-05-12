@@ -5,9 +5,8 @@ import com.maks.subscriptionsystem.entity.Plan;
 import com.maks.subscriptionsystem.dto.SubscriptionDto;
 import com.maks.subscriptionsystem.entity.User;
 import com.maks.subscriptionsystem.entity.Subscription;
+import com.maks.subscriptionsystem.exception.ConflictException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
-import com.maks.subscriptionsystem.exception.SubscriptionConflictException;
-import com.maks.subscriptionsystem.exception.UserConflictException;
 import com.maks.subscriptionsystem.mapper.SubscriptionMapper;
 import com.maks.subscriptionsystem.repository.PlanRepository;
 import com.maks.subscriptionsystem.repository.SubscriptionRepository;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.maks.subscriptionsystem.entity.Subscription.SubscriptionStatus.*;
@@ -51,7 +49,7 @@ public class SubscriptionService {
                 .orElseThrow(() -> new ItemNotFoundException("User not found with id: " + userId));
 
         if (hasActiveOrPendingSubscription(user.getId())) {
-            throw new UserConflictException("User with ID " + userId + " already has active or pending subscription");
+            throw new ConflictException("User with ID " + userId + " already has active or pending subscription");
         }
 
         Plan plan = planRepository.findById(planId)
@@ -71,7 +69,7 @@ public class SubscriptionService {
                 .orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));
 
         if(subscription.getStatus() == CANCELED)
-            throw new SubscriptionConflictException("Subscription with ID " + subscriptionId + " is already canceled");
+            throw new ConflictException("Subscription with ID " + subscriptionId + " is already canceled");
 
         subscription.setStatus(CANCELED);
         subscriptionRepository.save(subscription);

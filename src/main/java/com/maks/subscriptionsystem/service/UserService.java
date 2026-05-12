@@ -4,6 +4,7 @@ import com.maks.subscriptionsystem.dto.CreateUserDto;
 import com.maks.subscriptionsystem.dto.UserDto;
 import com.maks.subscriptionsystem.dto.filter.UserFilter;
 import com.maks.subscriptionsystem.entity.User;
+import com.maks.subscriptionsystem.exception.ConflictException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.UserMapper;
 import com.maks.subscriptionsystem.repository.UserRepository;
@@ -21,6 +22,8 @@ public class UserService {
 
     public UserDto createUser(CreateUserDto userDto) {
         User user = new User();
+        if(userRepository.existsByEmail(userDto.getEmail()))
+            throw new ConflictException("Email already exists");
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setFirstName(userDto.getFirstName());

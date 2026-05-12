@@ -1,14 +1,16 @@
 package com.maks.subscriptionsystem.exception.handler;
 
 import com.maks.subscriptionsystem.dto.ErrorDto;
-import com.maks.subscriptionsystem.exception.InvoiceConflictException;
-import com.maks.subscriptionsystem.exception.ItemNotFoundException;
-import com.maks.subscriptionsystem.exception.SubscriptionConflictException;
-import com.maks.subscriptionsystem.exception.UserConflictException;
+import com.maks.subscriptionsystem.exception.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,21 +20,20 @@ public class GlobalExceptionHandler {
         return ErrorDto.of(HttpStatus.NOT_FOUND, exception);
     }
 
-    @ExceptionHandler(InvoiceConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto InvoiceConflictException(InvoiceConflictException exception) {
-        return ErrorDto.of(HttpStatus.CONFLICT, exception);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleValidationException(MethodArgumentNotValidException exception) {
+        Map<String, String> errors = new HashMap<>();
+
+        for (FieldError error : exception.getBindingResult().getFieldErrors())
+            errors.put(error.getField(), error.getDefaultMessage());
+
+        return ErrorDto.of(HttpStatus.BAD_REQUEST, errors);
     }
 
-    @ExceptionHandler(SubscriptionConflictException.class)
+    @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto SubscriptionConflictException(SubscriptionConflictException exception) {
-        return ErrorDto.of(HttpStatus.CONFLICT, exception);
-    }
-
-    @ExceptionHandler(UserConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto UserConflictException(UserConflictException exception) {
+    public ErrorDto handleConflictException(ConflictException exception) {
         return ErrorDto.of(HttpStatus.CONFLICT, exception);
     }
 }
