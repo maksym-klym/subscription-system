@@ -31,27 +31,9 @@ public class GlobalExceptionHandler {
         return ErrorDto.of(HttpStatus.BAD_REQUEST, errors);
     }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto EmailAlreadyExistsException(EmailAlreadyExistsException exception) {
-        return ErrorDto.of(HttpStatus.CONFLICT, exception);
-    }
-
-    @ExceptionHandler(InvoiceConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto InvoiceConflictException(InvoiceConflictException exception) {
-        return ErrorDto.of(HttpStatus.CONFLICT, exception);
-    }
-
-    @ExceptionHandler(SubscriptionConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto SubscriptionConflictException(SubscriptionConflictException exception) {
-        return ErrorDto.of(HttpStatus.CONFLICT, exception);
-    }
-
-    @ExceptionHandler(UserConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto UserConflictException(UserConflictException exception) {
+    public ErrorDto handleConflictException(ConflictException exception) {
         return ErrorDto.of(HttpStatus.CONFLICT, exception);
     }
 }

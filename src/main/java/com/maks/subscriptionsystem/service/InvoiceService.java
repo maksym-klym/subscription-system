@@ -4,7 +4,7 @@ import com.maks.subscriptionsystem.dto.InvoiceDto;
 import com.maks.subscriptionsystem.entity.Invoice;
 import com.maks.subscriptionsystem.entity.Payment;
 import com.maks.subscriptionsystem.entity.Subscription;
-import com.maks.subscriptionsystem.exception.InvoiceConflictException;
+import com.maks.subscriptionsystem.exception.ConflictException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
 import com.maks.subscriptionsystem.mapper.InvoiceMapper;
 import com.maks.subscriptionsystem.repository.InvoiceRepository;
@@ -57,7 +57,7 @@ public class InvoiceService {
                 .orElseThrow(() -> new ItemNotFoundException("Invoice not found with id: " + invoiceId));
 
         if (invoice.getStatus() != PENDING)
-            throw new InvoiceConflictException(
+            throw new ConflictException(
                     "Invoice with ID " + invoiceId + " cannot be paid in status: " + invoice.getStatus()
             );
 
