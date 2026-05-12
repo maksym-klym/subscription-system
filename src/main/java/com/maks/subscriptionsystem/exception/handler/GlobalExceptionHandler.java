@@ -1,10 +1,7 @@
 package com.maks.subscriptionsystem.exception.handler;
 
 import com.maks.subscriptionsystem.dto.ErrorDto;
-import com.maks.subscriptionsystem.exception.InvoiceConflictException;
-import com.maks.subscriptionsystem.exception.ItemNotFoundException;
-import com.maks.subscriptionsystem.exception.SubscriptionConflictException;
-import com.maks.subscriptionsystem.exception.UserConflictException;
+import com.maks.subscriptionsystem.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +29,12 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
 
         return ErrorDto.of(HttpStatus.BAD_REQUEST, errors);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto EmailAlreadyExistsException(EmailAlreadyExistsException exception) {
+        return ErrorDto.of(HttpStatus.CONFLICT, exception);
     }
 
     @ExceptionHandler(InvoiceConflictException.class)
