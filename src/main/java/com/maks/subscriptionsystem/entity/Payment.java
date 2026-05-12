@@ -19,8 +19,8 @@ public class Payment {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "invoice_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "invoice_id", nullable = false, unique = true)
     private Invoice invoice;
     @Column(nullable = false)
     private BigDecimal amount;

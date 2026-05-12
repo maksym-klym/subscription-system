@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
     @Query("""
@@ -20,4 +23,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
             @Param("status")Subscription.SubscriptionStatus status,
             Pageable pageable
     );
+    boolean existsByUserIdAndStatusIn(Long userId, List<Subscription.SubscriptionStatus> statuses);
+    List<Subscription> findAllByStatusAndEndDateBefore(Subscription.SubscriptionStatus status, LocalDateTime dateTime);
 }

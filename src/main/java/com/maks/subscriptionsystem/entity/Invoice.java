@@ -31,8 +31,8 @@ public class Invoice {
     private InvoiceStatus status;
 
     public enum InvoiceStatus{
-        CREATED,
+        PENDING,
         PAID,
-        OVERDUE
+        FAILED
     }
 }

@@ -1,8 +1,10 @@
 package com.maks.subscriptionsystem.exception.handler;
 
 import com.maks.subscriptionsystem.dto.ErrorDto;
-import com.maks.subscriptionsystem.exception.InvoiceAlreadyPaidException;
+import com.maks.subscriptionsystem.exception.InvoiceConflictException;
 import com.maks.subscriptionsystem.exception.ItemNotFoundException;
+import com.maks.subscriptionsystem.exception.SubscriptionConflictException;
+import com.maks.subscriptionsystem.exception.UserConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,9 +18,21 @@ public class GlobalExceptionHandler {
         return ErrorDto.of(HttpStatus.NOT_FOUND, exception);
     }
 
-    @ExceptionHandler(InvoiceAlreadyPaidException.class)
+    @ExceptionHandler(InvoiceConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorDto handleInvoiceAlreadyPaidException(InvoiceAlreadyPaidException exception) {
+    public ErrorDto InvoiceConflictException(InvoiceConflictException exception) {
+        return ErrorDto.of(HttpStatus.CONFLICT, exception);
+    }
+
+    @ExceptionHandler(SubscriptionConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto SubscriptionConflictException(SubscriptionConflictException exception) {
+        return ErrorDto.of(HttpStatus.CONFLICT, exception);
+    }
+
+    @ExceptionHandler(UserConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto UserConflictException(UserConflictException exception) {
         return ErrorDto.of(HttpStatus.CONFLICT, exception);
     }
 }
