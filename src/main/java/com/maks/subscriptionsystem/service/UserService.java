@@ -37,6 +37,12 @@ public class UserService {
         return UserMapper.toDto(savedUser);
     }
 
+    public UserDto get(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
+        return UserMapper.toDto(user);
+    }
+
     public Page<UserDto> getAll(UserFilter userFilter, Pageable pageable) {
         return userRepository.findAllBy(
                 userFilter.getEmail(),
@@ -44,12 +50,6 @@ public class UserService {
                 userFilter.getLastName(),
                 pageable
         ).map(UserMapper::toDto);
-    }
-
-    public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("User not found with id: " + id));
-        return UserMapper.toDto(user);
     }
 
     public AuthUserDto getAuthUser(String email) {

@@ -29,9 +29,9 @@ public class SubscriptionService {
     private final PlanRepository planRepository;
     private final InvoiceService invoiceService;
 
-    public SubscriptionDto get(Long subscriptionId) {
-        Subscription subscription = subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + subscriptionId));
+    public SubscriptionDto get(Long id) {
+        Subscription subscription = subscriptionRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Subscription not found with id: " + id));
         return SubscriptionMapper.toDto(subscription);
     }
 

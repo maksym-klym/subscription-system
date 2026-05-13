@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class PlanController {
     private final PlanService planService;
 
+    @Operation(summary = "Get plan by ID")
+    @GetMapping("/{id}")
+    public PlanDto get(@Parameter(description = "Plan ID") @PathVariable Long id) { return planService.get(id); }
+
     @Operation(summary = "Get all plans")
     @GetMapping
     public Page<PlanDto> getAll(
@@ -28,8 +32,4 @@ public class PlanController {
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject  Pageable pageable) {
         return planService.getAll(name, pageable);
     }
-
-    @Operation(summary = "Get plan by ID")
-    @GetMapping("/{id}")
-    public PlanDto get(@Parameter(description = "Plan ID") @PathVariable Long id) { return planService.getPlanById(id); }
 }

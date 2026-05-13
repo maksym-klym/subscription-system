@@ -26,6 +26,18 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final InvoiceService invoiceService;
 
+    @Operation(summary = "Create subscription with user ID and plan ID")
+    @PostMapping
+    public SubscriptionDto create(
+            @Parameter(description = "User ID") @RequestParam Long userId,
+            @Parameter(description = "Plan ID") @RequestParam Long planId) {
+        return subscriptionService.createSubscription(userId, planId);
+    }
+
+    @Operation(summary = "Get subscription by ID")
+    @GetMapping("/{id}")
+    public SubscriptionDto get(@Parameter(description = "Subscription ID") @PathVariable Long id) { return subscriptionService.get(id); }
+
     @Operation(summary = "Get all subscriptions")
     @GetMapping
     public Page<SubscriptionDto> getAll(
@@ -40,18 +52,6 @@ public class SubscriptionController {
             @Parameter(description = "Subscription ID") @PathVariable Long id,
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
         return invoiceService.getAllBySubscriptionId(id, pageable);
-    }
-
-    @Operation(summary = "Get subscription by ID")
-    @GetMapping("/{id}")
-    public SubscriptionDto get(@Parameter(description = "Subscription ID") @PathVariable Long id) { return subscriptionService.get(id); }
-
-    @Operation(summary = "Create subscription with user ID and plan ID")
-    @PostMapping
-    public SubscriptionDto create(
-            @Parameter(description = "User ID") @RequestParam Long userId,
-            @Parameter(description = "Plan ID") @RequestParam Long planId) {
-        return subscriptionService.createSubscription(userId, planId);
     }
 
     @Operation(summary = "Cancel subscription by ID")

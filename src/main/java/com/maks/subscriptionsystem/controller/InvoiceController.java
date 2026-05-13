@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class InvoiceController {
     private final InvoiceService invoiceService;
 
+    @Operation(summary = "Get invoice by ID")
+    @GetMapping("/{id}")
+    public InvoiceDto get(@Parameter(description = "Invoice ID") @PathVariable Long id) { return invoiceService.get(id); }
+
     @Operation(summary = "Get all invoices")
     @GetMapping
     public Page<InvoiceDto> getAll(
@@ -28,10 +32,6 @@ public class InvoiceController {
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable) {
         return invoiceService.getAll(status, pageable);
     }
-
-    @Operation(summary = "Get invoice by ID")
-    @GetMapping("/{id}")
-    public InvoiceDto get(@Parameter(description = "Invoice ID") @PathVariable Long id){ return invoiceService.get(id); }
 
     @Operation(summary = "Pay invoice by ID")
     @PostMapping("/{invoiceId}/pay")
