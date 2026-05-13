@@ -1,5 +1,6 @@
 package com.maks.subscriptionsystem.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,5 +26,28 @@ public class JwtTokenService {
                 .setExpiration(expiredDate)
                 .signWith(Keys.hmacShaKeyFor(accessSecret.getBytes()))
                 .compact();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        String username = getUsername(token);
+        return username.equals(userDetails.getUsername())
+                && !isTokenExpired(token);
+    }
+
+    public boolean isTokenExpired(String token) {
+        Date expiration = getAllClaimsFromAccessToken(token).getExpiration();
+        return expiration.before(new Date());
+    }
+
+    public String getUsername(String token) {
+        return getAllClaimsFromAccessToken(token).getSubject();
+    }
+
+    private Claims getAllClaimsFromAccessToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(accessSecret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
